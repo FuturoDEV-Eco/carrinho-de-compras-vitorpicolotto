@@ -6,6 +6,8 @@ app.use(express.json()) //Obrigatório. Habilita o servidor
 const clientRoutes = require('./src/routes/clients.routes')
 app.use('/clients', clientRoutes)
 
+const productRoutes = require('./src/routes/products.routes')
+app.use('/products', productRoutes)
 
 
 
