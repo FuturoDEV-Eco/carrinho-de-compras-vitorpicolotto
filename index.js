@@ -1,9 +1,9 @@
-const express = require(express)
+const express = require("express")
 const app = express()
 app.use(express.json()) //Obrigatório. Habilita o servidor
 
 
-const clientRoutes = require('./routes/clientRoutes')
+const clientRoutes = require('./src/routes/clients.routes')
 app.use('/clients', clientRoutes)
 
 
