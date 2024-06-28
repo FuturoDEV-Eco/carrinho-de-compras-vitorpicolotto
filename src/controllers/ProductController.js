@@ -31,8 +31,24 @@ class ProductController{
         }
     }
 
-}
 
+    async listarTodos(request, response){
+        const buscar = request.query
+        const produtos = await conexaoPG.query(
+            "SELECT * from products"
+        )
+        
+        response.json(produtos.rows)
+    }
+
+
+
+
+
+
+
+    
+}
 
 
 
