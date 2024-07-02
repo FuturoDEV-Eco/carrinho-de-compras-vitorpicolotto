@@ -9,9 +9,8 @@ app.use('/clients', clientRoutes)
 const productRoutes = require('./src/routes/products.routes')
 app.use('/products', productRoutes)
 
-
-
-
+const pedidoRoutes = require('./src/routes/pedidos.routes')
+app.use('/pedidos', pedidoRoutes)
 
 
 app.listen(3000, ()=>{
