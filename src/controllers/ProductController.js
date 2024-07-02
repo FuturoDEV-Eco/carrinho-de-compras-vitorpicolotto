@@ -10,6 +10,7 @@ const conexaoPG = new Pool({
 
 class ProductController{
 
+    //POST para cadastrar o produto
     async criar(request, response){
         try {
             const dadosProduto = request.body
@@ -19,9 +20,9 @@ class ProductController{
             }
 
             const produto = await conexaoPG.query(`
-                INSERT INTO products (nome, amount, color, voltage, description, category_id)
-                values ($1, $2, $3, $4, $5, $6)
-                `, [dadosProduto.nome, dadosProduto.amount, dadosProduto.color, dadosProduto.voltage, dadosProduto.description, dadosProduto.category_id]
+                INSERT INTO products (nome, amount, color, voltage, description, category_id, price)
+                values ($1, $2, $3, $4, $5, $6, $7)
+                `, [dadosProduto.nome, dadosProduto.amount, dadosProduto.color, dadosProduto.voltage, dadosProduto.description, dadosProduto.category_id, dadosProduto.price]
             )
 
             response.status(201).json(produto.rows[0])
@@ -31,7 +32,7 @@ class ProductController{
         }
     }
 
-
+    //Método GET para todos os produtos
     async listarTodos(request, response){
         const buscar = request.query
         const produtos = await conexaoPG.query(
@@ -41,13 +42,33 @@ class ProductController{
         response.json(produtos.rows)
     }
 
+    //Método GET para apenas um produto
+    async listarUm(request, response){
 
+        try {
+            const id = request.params.id
 
+            const produtoDetalhe = await conexaoPG.query(`
+                p.id AS product_id, p.name AS product_name,
+                c.id AS category_id, c.name AS category_name,
+                p.amount, p.color, p.voltage, p.description, p.price
+                FROM products p JOIN categories c ON p.category_id = c.id
+                WHERE p.id = $1           
+                `, [id]
+            )
+ 
+            if(produtoDetalhe.rowCount === 0){
+                return response.status(404).json({mensagem: 'Produto não encontrado!'})
+            }
 
+            response.json(produtoDetalhe.rows[0])
 
+        } catch (error) {
+            response.status(500).json({erro: 'Erro ao listar produto!'})
+        }
+    }
 
-
-    
+    //Adicionar outras funcionalidades aqui.
 }
 
 

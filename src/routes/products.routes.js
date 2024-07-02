@@ -5,6 +5,7 @@ const productRoutes = new Router()
 
 productRoutes.post('/', ProductController.criar)
 productRoutes.get('/', ProductController.listarTodos)
+productRoutes.get('/', ProductController.listarUm)
 
 
 
