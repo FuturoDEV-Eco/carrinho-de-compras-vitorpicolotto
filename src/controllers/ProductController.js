@@ -49,9 +49,10 @@ class ProductController{
             const id = request.params.id
 
             const produtoDetalhe = await conexaoPG.query(`
-                p.id AS product_id, p.name AS product_name,
-                c.id AS category_id, c.name AS category_name,
-                p.amount, p.color, p.voltage, p.description, p.price
+                SELECT
+                    p.id AS product_id, p.nome AS product_nome,
+                    c.id AS category_id, c.nome AS category_nome,
+                    p.amount, p.color, p.voltage, p.description, p.price
                 FROM products p JOIN categories c ON p.category_id = c.id
                 WHERE p.id = $1           
                 `, [id]

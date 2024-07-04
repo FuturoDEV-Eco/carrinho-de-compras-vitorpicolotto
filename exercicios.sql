@@ -23,7 +23,7 @@ VALUES ('Celulares'),('Pets'), ('Cozinha'), ('Escritório'), ('Games'), ('Banhei
 create table products (
 	id SERIAL PRIMARY KEY,
 	nome VARCHAR(150) not null,
-	amount INTEGER unique default 0,
+	amount INTEGER default 0,
 	color VARCHAR(50),
 	voltage NUMERIC(3, 0),
 	description TEXT,
