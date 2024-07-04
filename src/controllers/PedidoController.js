@@ -25,7 +25,7 @@ class PedidoController {
     
             for (let i = 0; i < dados.products.length; i++) {
                 const item = dados.products[i];
-                const produtoAtual = await this.database.query(`
+                const produtoAtual = await conexaoPG.query(`
                     SELECT price FROM products 
                     WHERE id = $1
                 `, [item.product_id]);
@@ -52,7 +52,7 @@ class PedidoController {
                 )
     
                 conexaoPG.query(`
-                    INSERT INTO orders_items (client_id, product_id, amount, price)
+                    INSERT INTO orders_items (order_id, product_id, amount, price)
                     values ($1, $2, $3, $4)
                     RETURNING *
                     `, [meuPedido.rows[0].id, item.product_id, item.amount, produtoAtual.rows[0].price]
